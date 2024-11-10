@@ -20,6 +20,9 @@ function App() {
                 <Route path={["/", "/movies/:movieId"]}>
                     <Home />
                 </Route>
+                <Route path="/tv/:tvId">
+                    <Tv />
+                </Route>
             </Switch>
         </Router>
     );

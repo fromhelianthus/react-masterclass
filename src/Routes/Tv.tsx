@@ -1,6 +1,5 @@
-// Tv.tsx
-
 import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom"; // useHistory 사용
 import {
     getLatestShows,
     getAiringTodayShows,
@@ -9,13 +8,13 @@ import {
 } from "../api";
 
 function Tv() {
-    // 상태 정의
     const [latestShows, setLatestShows] = useState<any[]>([]);
     const [airingToday, setAiringToday] = useState<any[]>([]);
     const [popularShows, setPopularShows] = useState<any[]>([]);
     const [topRatedShows, setTopRatedShows] = useState<any[]>([]);
+    const [selectedShow, setSelectedShow] = useState<any | null>(null);
+    const history = useHistory(); // useHistory 사용
 
-    // API 데이터를 받아오는 useEffect 훅
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -24,7 +23,6 @@ function Tv() {
                 const popular = await getPopularShows();
                 const topRated = await getTopRatedShows();
 
-                // 결과가 없다면 빈 배열로 처리
                 setLatestShows(latest.results || []);
                 setAiringToday(airingTodayData.results || []);
                 setPopularShows(popular.results || []);
@@ -35,9 +33,8 @@ function Tv() {
         };
 
         fetchData();
-    }, []); // 컴포넌트 마운트 시 데이터 로드
+    }, []);
 
-    // 슬라이더 아이템을 렌더링하는 함수
     const renderSlider = (shows: any[], title: string) => (
         <div style={{ marginBottom: "20px" }}>
             <h2>{title}</h2>
@@ -51,12 +48,22 @@ function Tv() {
                                 backgroundColor: "black",
                             }}
                         >
-                            <img
-                                src={`https://image.tmdb.org/t/p/w200${show.poster_path}`}
-                                alt={show.name}
-                                style={{ width: "100%", borderRadius: "8px" }}
-                            />
-                            <h3>{show.name}</h3>
+                            <div
+                                onClick={() => {
+                                    setSelectedShow(show);
+                                    history.push(`/tv/${show.id}`); // useHistory 사용
+                                }}
+                            >
+                                <img
+                                    src={`https://image.tmdb.org/t/p/w200${show.poster_path}`}
+                                    alt={show.name}
+                                    style={{
+                                        width: "100%",
+                                        borderRadius: "8px",
+                                    }}
+                                />
+                                <h3>{show.name}</h3>
+                            </div>
                         </div>
                     ))
                 ) : (
@@ -66,12 +73,73 @@ function Tv() {
         </div>
     );
 
+    const closeModal = () => {
+        setSelectedShow(null);
+        history.push("/tv"); // URL 변경
+    };
+
     return (
         <div style={{ backgroundColor: "black", padding: "20px" }}>
             {renderSlider(latestShows, "Latest Shows")}
             {renderSlider(airingToday, "Airing Today")}
             {renderSlider(popularShows, "Popular Shows")}
             {renderSlider(topRatedShows, "Top Rated Shows")}
+
+            {selectedShow && (
+                <div
+                    style={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100vw",
+                        height: "100vh",
+                        backgroundColor: "rgba(0, 0, 0, 0.5)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 1000,
+                    }}
+                    onClick={closeModal}
+                >
+                    <div
+                        style={{
+                            backgroundColor: "white",
+                            padding: "20px",
+                            borderRadius: "8px",
+                            width: "80%",
+                            maxWidth: "600px",
+                            cursor: "auto",
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <h2>{selectedShow.name}</h2>
+                        <img
+                            src={`https://image.tmdb.org/t/p/w500${selectedShow.poster_path}`}
+                            alt={selectedShow.name}
+                            style={{
+                                width: "100%",
+                                borderRadius: "8px",
+                                marginBottom: "10px",
+                            }}
+                        />
+                        <p>{selectedShow.overview}</p>
+                        <button
+                            onClick={closeModal}
+                            style={{
+                                backgroundColor: "#ff5e57",
+                                color: "white",
+                                padding: "10px 20px",
+                                borderRadius: "5px",
+                                border: "none",
+                                cursor: "pointer",
+                                marginTop: "10px",
+                            }}
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

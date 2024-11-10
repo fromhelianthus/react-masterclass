@@ -108,6 +108,16 @@ export const getTopRatedShows = async () => {
     return response.json();
 };
 
+// 특정 TV 쇼 정보 가져오기
+export const getTvDetails = async (tvId: number) => {
+    const response = await fetch(`${BASE_PATH}/tv/${tvId}?api_key=${API_KEY}`);
+    console.log("TV Details Response:", response); // 응답 확인
+    if (!response.ok) {
+        throw new Error("Failed to fetch TV details");
+    }
+    return response.json();
+};
+
 // Search
 export const getMoviesByKeyword = async (keyword: string) => {
     const response = await fetch(
