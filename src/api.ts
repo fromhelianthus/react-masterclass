@@ -66,3 +66,44 @@ export const getUpcomingMovies = async () => {
     }
     return response.json();
 };
+
+// TV Show
+export const getLatestShows = async () => {
+    const response = await fetch(`${BASE_PATH}/tv/latest?api_key=${API_KEY}`);
+    console.log("Latest Shows Response:", response); // 응답 확인
+    if (!response.ok) {
+        throw new Error("Failed to fetch latest shows");
+    }
+    return response.json();
+};
+
+export const getAiringTodayShows = async () => {
+    const response = await fetch(
+        `${BASE_PATH}/tv/airing_today?api_key=${API_KEY}`
+    );
+    console.log("Airing Today Shows Response:", response); // 응답 확인
+    if (!response.ok) {
+        throw new Error("Failed to fetch airing today shows");
+    }
+    return response.json();
+};
+
+export const getPopularShows = async () => {
+    const response = await fetch(`${BASE_PATH}/tv/popular?api_key=${API_KEY}`);
+    console.log("Popular Shows Response:", response); // 응답 확인
+    if (!response.ok) {
+        throw new Error("Failed to fetch popular shows");
+    }
+    return response.json();
+};
+
+export const getTopRatedShows = async () => {
+    const response = await fetch(
+        `${BASE_PATH}/tv/top_rated?api_key=${API_KEY}`
+    );
+    console.log("Top Rated Shows Response:", response); // 응답 확인
+    if (!response.ok) {
+        throw new Error("Failed to fetch top-rated shows");
+    }
+    return response.json();
+};
