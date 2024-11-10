@@ -107,3 +107,30 @@ export const getTopRatedShows = async () => {
     }
     return response.json();
 };
+
+// Search
+export const getMoviesByKeyword = async (keyword: string) => {
+    const response = await fetch(
+        `${BASE_PATH}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(
+            keyword
+        )}`
+    );
+    console.log("Movies by Keyword Response:", response); // 응답 확인
+    if (!response.ok) {
+        throw new Error("Failed to fetch movies");
+    }
+    return response.json();
+};
+
+export const getTvByKeyword = async (keyword: string) => {
+    const response = await fetch(
+        `${BASE_PATH}/search/tv?api_key=${API_KEY}&query=${encodeURIComponent(
+            keyword
+        )}`
+    );
+    console.log("TV by Keyword Response:", response); // 응답 확인
+    if (!response.ok) {
+        throw new Error("Failed to fetch TV shows");
+    }
+    return response.json();
+};
