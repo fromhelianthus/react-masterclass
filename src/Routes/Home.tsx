@@ -229,7 +229,7 @@ function Home() {
                 <Loader>Loading...</Loader>
             ) : (
                 <>
-                    {/* 현재 상영중인 영화 */}
+                    <h3>Now Playing Movies</h3>
                     <Banner
                         onClick={incraseIndex}
                         bgPhoto={makeImagePath(
@@ -240,97 +240,80 @@ function Home() {
                         <Overview>{data?.results[0].overview}</Overview>
                     </Banner>
 
-                    {/* 추가로 받은 영화 데이터들 (예: 최신 영화) */}
-                    <div>
-                        <h3>Latest Movies</h3>
-                        <Row
-                            variants={rowVariants}
-                            initial="hidden"
-                            animate="visible"
-                            exit="exit"
-                            transition={{ type: "tween", duration: 1 }}
-                        >
-                            {latestMoviesData?.results?.map((movie: IMovie) => (
-                                <Box
-                                    key={movie.id}
-                                    whileHover="hover"
-                                    initial="normal"
-                                    variants={boxVariants}
-                                    onClick={() => onBoxClicked(movie.id)}
-                                    transition={{ type: "tween" }}
-                                    bgPhoto={makeImagePath(movie.poster_path)}
-                                >
-                                    <Info variants={infoVariants}>
-                                        <h4>{movie.title}</h4>
-                                    </Info>
-                                </Box>
-                            ))}
-                        </Row>
-                    </div>
+                    <h3>Latest Movies</h3>
+                    <Row
+                        variants={rowVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        transition={{ type: "tween", duration: 1 }}
+                    >
+                        {latestMoviesData?.results?.map((movie: IMovie) => (
+                            <Box
+                                key={movie.id}
+                                whileHover="hover"
+                                initial="normal"
+                                variants={boxVariants}
+                                onClick={() => onBoxClicked(movie.id)}
+                                transition={{ type: "tween" }}
+                                bgPhoto={makeImagePath(movie.poster_path)}
+                            >
+                                <Info variants={infoVariants}>
+                                    <h4>{movie.title}</h4>
+                                </Info>
+                            </Box>
+                        ))}
+                    </Row>
 
-                    {/* 추가된 데이터 출력 예시: 최고 평점 영화 */}
-                    <div>
-                        <h3>Top Rated Movies</h3>
-                        <Row
-                            variants={rowVariants}
-                            initial="hidden"
-                            animate="visible"
-                            exit="exit"
-                            transition={{ type: "tween", duration: 1 }}
-                        >
-                            {topRatedMoviesData?.results?.map(
-                                (movie: IMovie) => (
-                                    <Box
-                                        key={movie.id}
-                                        whileHover="hover"
-                                        initial="normal"
-                                        variants={boxVariants}
-                                        onClick={() => onBoxClicked(movie.id)}
-                                        transition={{ type: "tween" }}
-                                        bgPhoto={makeImagePath(
-                                            movie.poster_path
-                                        )}
-                                    >
-                                        <Info variants={infoVariants}>
-                                            <h4>{movie.title}</h4>
-                                        </Info>
-                                    </Box>
-                                )
-                            )}
-                        </Row>
-                    </div>
+                    <h3>Top Rated Movies</h3>
+                    <Row
+                        variants={rowVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        transition={{ type: "tween", duration: 1 }}
+                    >
+                        {topRatedMoviesData?.results?.map((movie: IMovie) => (
+                            <Box
+                                key={movie.id}
+                                whileHover="hover"
+                                initial="normal"
+                                variants={boxVariants}
+                                onClick={() => onBoxClicked(movie.id)}
+                                transition={{ type: "tween" }}
+                                bgPhoto={makeImagePath(movie.poster_path)}
+                            >
+                                <Info variants={infoVariants}>
+                                    <h4>{movie.title}</h4>
+                                </Info>
+                            </Box>
+                        ))}
+                    </Row>
 
-                    {/* 추가된 데이터 출력 예시: 곧 개봉할 영화 */}
-                    <div>
-                        <h3>Upcoming Movies</h3>
-                        <Row
-                            variants={rowVariants}
-                            initial="hidden"
-                            animate="visible"
-                            exit="exit"
-                            transition={{ type: "tween", duration: 1 }}
-                        >
-                            {upcomingMoviesData?.results?.map(
-                                (movie: IMovie) => (
-                                    <Box
-                                        key={movie.id}
-                                        whileHover="hover"
-                                        initial="normal"
-                                        variants={boxVariants}
-                                        onClick={() => onBoxClicked(movie.id)}
-                                        transition={{ type: "tween" }}
-                                        bgPhoto={makeImagePath(
-                                            movie.poster_path
-                                        )}
-                                    >
-                                        <Info variants={infoVariants}>
-                                            <h4>{movie.title}</h4>
-                                        </Info>
-                                    </Box>
-                                )
-                            )}
-                        </Row>
-                    </div>
+                    <h3>Upcoming Movies</h3>
+                    <Row
+                        variants={rowVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        transition={{ type: "tween", duration: 1 }}
+                    >
+                        {upcomingMoviesData?.results?.map((movie: IMovie) => (
+                            <Box
+                                key={movie.id}
+                                whileHover="hover"
+                                initial="normal"
+                                variants={boxVariants}
+                                onClick={() => onBoxClicked(movie.id)}
+                                transition={{ type: "tween" }}
+                                bgPhoto={makeImagePath(movie.poster_path)}
+                            >
+                                <Info variants={infoVariants}>
+                                    <h4>{movie.title}</h4>
+                                </Info>
+                            </Box>
+                        ))}
+                    </Row>
 
                     {/* 큰 영화 상세 화면 */}
                     <AnimatePresence>
