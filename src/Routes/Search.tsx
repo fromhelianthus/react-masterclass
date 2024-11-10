@@ -2,9 +2,9 @@
 
 import { useLocation } from "react-router";
 import { useState, useEffect } from "react";
+import styled from "styled-components";
 import { getMoviesByKeyword, getTvByKeyword } from "../api";
 
-// 영화와 TV 쇼 데이터 타입 정의
 interface Movie {
     id: number;
     title: string;
@@ -17,25 +17,58 @@ interface TVShow {
     poster_path: string;
 }
 
+const SearchResult = styled.h2`
+    font-size: 30px;
+    font-weight: 600;
+    margin-top: 100px;
+    margin-bottom: 20px;
+`;
+
+const Subtitle = styled.h3`
+    font-size: 26px;
+    font-weight: 600;
+    color: white;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+`;
+
+const Slider = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding-bottom: 10px;
+`;
+
+const SliderItem = styled.div`
+    min-width: 200px;
+    background-color: black;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+`;
+
 function Search() {
     const location = useLocation();
     const keyword = new URLSearchParams(location.search).get("keyword");
 
-    const [movies, setMovies] = useState<Movie[]>([]); // 영화 데이터 타입 정의
-    const [tvShows, setTvShows] = useState<TVShow[]>([]); // TV 쇼 데이터 타입 정의
+    const [movies, setMovies] = useState<Movie[]>([]);
+    const [tvShows, setTvShows] = useState<TVShow[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
     useEffect(() => {
         if (keyword) {
-            setLoading(true); // 로딩 시작
+            setLoading(true);
 
-            // 영화와 TV 프로그램 검색
             Promise.all([getMoviesByKeyword(keyword), getTvByKeyword(keyword)])
                 .then(([moviesData, tvShowsData]) => {
-                    setMovies(moviesData.results); // 영화 데이터 저장
-                    setTvShows(tvShowsData.results); // TV 프로그램 데이터 저장
-                    setLoading(false); // 로딩 완료
+                    setMovies(moviesData.results);
+                    setTvShows(tvShowsData.results);
+                    setLoading(false);
                 })
                 .catch((err) => {
                     setError("데이터를 불러오는 데 실패했습니다.");
@@ -44,43 +77,41 @@ function Search() {
         }
     }, [keyword]);
 
-    // 로딩 중, 에러 처리
-    if (loading) return <div>로딩 중...</div>;
+    if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
 
-    // 슬라이더로 영화와 TV 프로그램 출력
     return (
         <div>
-            <h2>검색 결과: {keyword}</h2>
+            <SearchResult>"{keyword}" 검색 결과</SearchResult>
             <div>
-                <h3>Movies</h3>
-                <div className="slider">
+                <Subtitle>Movies</Subtitle>
+                <Slider>
                     {movies.map((movie) => (
-                        <div key={movie.id} className="slider-item">
+                        <SliderItem key={movie.id}>
                             <img
                                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                                 alt={movie.title}
                                 width={200}
                             />
                             <p>{movie.title}</p>
-                        </div>
+                        </SliderItem>
                     ))}
-                </div>
+                </Slider>
             </div>
             <div>
-                <h3>TV Shows</h3>
-                <div className="slider">
+                <Subtitle>TV Shows</Subtitle>
+                <Slider>
                     {tvShows.map((show) => (
-                        <div key={show.id} className="slider-item">
+                        <SliderItem key={show.id}>
                             <img
                                 src={`https://image.tmdb.org/t/p/w500${show.poster_path}`}
                                 alt={show.name}
                                 width={200}
                             />
                             <p>{show.name}</p>
-                        </div>
+                        </SliderItem>
                     ))}
-                </div>
+                </Slider>
             </div>
         </div>
     );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom"; // useHistory 사용
+import styled from "styled-components";
+import { Link, useHistory } from "react-router-dom";
 import {
     getLatestShows,
     getAiringTodayShows,
@@ -7,13 +8,24 @@ import {
     getTopRatedShows,
 } from "../api";
 
+const Subtitle = styled.h3`
+    font-size: 26px;
+    font-weight: 600;
+    color: white;
+    margin-top: 50px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+`;
+
 function Tv() {
     const [latestShows, setLatestShows] = useState<any[]>([]);
     const [airingToday, setAiringToday] = useState<any[]>([]);
     const [popularShows, setPopularShows] = useState<any[]>([]);
     const [topRatedShows, setTopRatedShows] = useState<any[]>([]);
     const [selectedShow, setSelectedShow] = useState<any | null>(null);
-    const history = useHistory(); // useHistory 사용
+    const history = useHistory();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -37,45 +49,40 @@ function Tv() {
 
     const renderSlider = (shows: any[], title: string) => (
         <div style={{ marginBottom: "20px" }}>
-            <h2>{title}</h2>
-            <div style={{ display: "flex", overflowX: "scroll", gap: "10px" }}>
-                {shows.length > 0 ? (
-                    shows.map((show) => (
+            <Subtitle>{title}</Subtitle>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+                {shows.map((show) => (
+                    <div
+                        key={show.id}
+                        style={{
+                            minWidth: "150px",
+                            backgroundColor: "black",
+                        }}
+                    >
                         <div
-                            key={show.id}
-                            style={{
-                                minWidth: "150px",
-                                backgroundColor: "black",
+                            onClick={() => {
+                                setSelectedShow(show);
+                                history.push(`/tv/${show.id}`); // useHistory 사용
                             }}
                         >
-                            <div
-                                onClick={() => {
-                                    setSelectedShow(show);
-                                    history.push(`/tv/${show.id}`); // useHistory 사용
+                            <img
+                                src={`https://image.tmdb.org/t/p/w200${show.poster_path}`}
+                                alt={show.name}
+                                style={{
+                                    width: "100%",
                                 }}
-                            >
-                                <img
-                                    src={`https://image.tmdb.org/t/p/w200${show.poster_path}`}
-                                    alt={show.name}
-                                    style={{
-                                        width: "100%",
-                                        borderRadius: "8px",
-                                    }}
-                                />
-                                <h3>{show.name}</h3>
-                            </div>
+                            />
+                            <h3>{show.name}</h3>
                         </div>
-                    ))
-                ) : (
-                    <p>No shows available</p>
-                )}
+                    </div>
+                ))}
             </div>
         </div>
     );
 
     const closeModal = () => {
         setSelectedShow(null);
-        history.push("/tv"); // URL 변경
+        history.push("/tv");
     };
 
     return (

@@ -18,6 +18,15 @@ const Nav = styled(motion.nav)`
     color: white;
 `;
 
+const NavText = styled(motion.nav)`
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+`;
+
 const Col = styled.div`
     display: flex;
     align-items: center;
@@ -29,7 +38,7 @@ const Logo = styled(motion.svg)`
     height: 25px;
     fill: ${(props) => props.theme.red};
     path {
-        stroke-width: 6px;
+        stroke-width: 3px;
         stroke: white;
     }
 `;
@@ -160,13 +169,16 @@ function Header() {
                 <Items>
                     <Item>
                         <Link to="/">
-                            Home{" "}
+                            <NavText>Home </NavText>
                             {homeMatch?.isExact && <Circle layoutId="circle" />}
                         </Link>
                     </Item>
                     <Item>
                         <Link to="/tv">
-                            Tv Shows {tvMatch && <Circle layoutId="circle" />}
+                            <NavText>
+                                Tv Shows{" "}
+                                {tvMatch && <Circle layoutId="circle" />}
+                            </NavText>
                         </Link>
                     </Item>
                 </Items>

@@ -25,42 +25,39 @@ export interface IGetMoviesResult {
 export function getMovies() {
     return fetch(`${BASE_PATH}/movie/now_playing?api_key=${API_KEY}`).then(
         (response) => {
-            console.log("Now Playing Movies Response:", response); // 응답 확인
+            console.log("Now Playing Movies Response:", response);
             return response.json();
         }
     );
 }
 
-// 최신 영화 목록
 export const getLatestMovies = async () => {
     const response = await fetch(
         `${BASE_PATH}/movie/latest?api_key=${API_KEY}`
     );
-    console.log("Latest Movies Response:", response); // 응답 확인
+    console.log("Latest Movies Response:", response);
     if (!response.ok) {
         throw new Error("Failed to fetch latest movies");
     }
     return response.json();
 };
 
-// 최고 평점 영화 목록
 export const getTopRatedMovies = async () => {
     const response = await fetch(
         `${BASE_PATH}/movie/top_rated?api_key=${API_KEY}`
     );
-    console.log("Top Rated Movies Response:", response); // 응답 확인
+    console.log("Top Rated Movies Response:", response);
     if (!response.ok) {
         throw new Error("Failed to fetch top rated movies");
     }
     return response.json();
 };
 
-// 곧 개봉할 영화 목록
 export const getUpcomingMovies = async () => {
     const response = await fetch(
         `${BASE_PATH}/movie/upcoming?api_key=${API_KEY}`
     );
-    console.log("Upcoming Movies Response:", response); // 응답 확인
+    console.log("Upcoming Movies Response:", response);
     if (!response.ok) {
         throw new Error("Failed to fetch upcoming movies");
     }
@@ -70,7 +67,7 @@ export const getUpcomingMovies = async () => {
 // TV Show
 export const getLatestShows = async () => {
     const response = await fetch(`${BASE_PATH}/tv/latest?api_key=${API_KEY}`);
-    console.log("Latest Shows Response:", response); // 응답 확인
+    console.log("Latest Shows Response:", response);
     if (!response.ok) {
         throw new Error("Failed to fetch latest shows");
     }
@@ -81,7 +78,7 @@ export const getAiringTodayShows = async () => {
     const response = await fetch(
         `${BASE_PATH}/tv/airing_today?api_key=${API_KEY}`
     );
-    console.log("Airing Today Shows Response:", response); // 응답 확인
+    console.log("Airing Today Shows Response:", response);
     if (!response.ok) {
         throw new Error("Failed to fetch airing today shows");
     }
@@ -90,7 +87,7 @@ export const getAiringTodayShows = async () => {
 
 export const getPopularShows = async () => {
     const response = await fetch(`${BASE_PATH}/tv/popular?api_key=${API_KEY}`);
-    console.log("Popular Shows Response:", response); // 응답 확인
+    console.log("Popular Shows Response:", response);
     if (!response.ok) {
         throw new Error("Failed to fetch popular shows");
     }
@@ -101,7 +98,7 @@ export const getTopRatedShows = async () => {
     const response = await fetch(
         `${BASE_PATH}/tv/top_rated?api_key=${API_KEY}`
     );
-    console.log("Top Rated Shows Response:", response); // 응답 확인
+    console.log("Top Rated Shows Response:", response);
     if (!response.ok) {
         throw new Error("Failed to fetch top-rated shows");
     }
@@ -111,7 +108,7 @@ export const getTopRatedShows = async () => {
 // 특정 TV 쇼 정보 가져오기
 export const getTvDetails = async (tvId: number) => {
     const response = await fetch(`${BASE_PATH}/tv/${tvId}?api_key=${API_KEY}`);
-    console.log("TV Details Response:", response); // 응답 확인
+    console.log("TV Details Response:", response);
     if (!response.ok) {
         throw new Error("Failed to fetch TV details");
     }
@@ -125,7 +122,7 @@ export const getMoviesByKeyword = async (keyword: string) => {
             keyword
         )}`
     );
-    console.log("Movies by Keyword Response:", response); // 응답 확인
+    console.log("Movies by Keyword Response:", response);
     if (!response.ok) {
         throw new Error("Failed to fetch movies");
     }
@@ -138,7 +135,7 @@ export const getTvByKeyword = async (keyword: string) => {
             keyword
         )}`
     );
-    console.log("TV by Keyword Response:", response); // 응답 확인
+    console.log("TV by Keyword Response:", response);
     if (!response.ok) {
         throw new Error("Failed to fetch TV shows");
     }

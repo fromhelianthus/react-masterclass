@@ -41,6 +41,17 @@ const Title = styled.h2`
     margin-bottom: 20px;
 `;
 
+const Subtitle = styled.h3`
+    font-size: 26px;
+    font-weight: 600;
+    color: white;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+`;
+
 const Overview = styled.p`
     font-size: 30px;
     width: 50%;
@@ -178,13 +189,11 @@ function Home() {
     );
     const { scrollY } = useViewportScroll();
 
-    // getMovies 요청 (기존 코드)
     const { data, isLoading } = useQuery<IGetMoviesResult>(
         ["movies", "nowPlaying"],
         getMovies
     );
 
-    // 추가한 API 요청들
     const { data: latestMoviesData } = useQuery<IGetMoviesResult>(
         "latestMovies",
         getLatestMovies
@@ -229,7 +238,7 @@ function Home() {
                 <Loader>Loading...</Loader>
             ) : (
                 <>
-                    <h3>Now Playing Movies</h3>
+                    {/* <Subtitle>Now Playing Movies</Subtitle> */}
                     <Banner
                         onClick={incraseIndex}
                         bgPhoto={makeImagePath(
@@ -240,7 +249,7 @@ function Home() {
                         <Overview>{data?.results[0].overview}</Overview>
                     </Banner>
 
-                    <h3>Latest Movies</h3>
+                    <Subtitle>Latest Movies</Subtitle>
                     <Row
                         variants={rowVariants}
                         initial="hidden"
@@ -265,7 +274,7 @@ function Home() {
                         ))}
                     </Row>
 
-                    <h3>Top Rated Movies</h3>
+                    <Subtitle>Top Rated Movies</Subtitle>
                     <Row
                         variants={rowVariants}
                         initial="hidden"
@@ -290,7 +299,7 @@ function Home() {
                         ))}
                     </Row>
 
-                    <h3>Upcoming Movies</h3>
+                    <Subtitle>Upcoming Movies</Subtitle>
                     <Row
                         variants={rowVariants}
                         initial="hidden"
